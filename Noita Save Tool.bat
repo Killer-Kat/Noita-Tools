@@ -1,7 +1,8 @@
 @ECHO off
 Rem Noita Save/Backup script
 Rem Created by https://github.com/Killer-Kat, inspired by this reddit post https://www.reddit.com/r/noita/comments/da5pwb/scripts_to_backuprestore_your_saves/
-
+rem FASTMODE toggles auto launch after a restore.
+set FASTMODE=false
 title Noita Save Script
 color 0D
 Echo Noitia Saving Script, Created by Killer-Kat.
@@ -9,6 +10,7 @@ Echo Noitia Saving Script, Created by Killer-Kat.
 Rem this part gets the user input to select the task.
 :selection
 Echo Options: 1. Save 2. Restore 3. Exit
+if /I "%FASTMODE%"=="true" ( echo Auto Launch enabled )
 set /p input="Select option: "
 
 if "%input%"=="1" ( goto ONE)
@@ -32,6 +34,7 @@ mkdir %userprofile%\AppData\LocalLow\Nolla_Games_Noita\save00
 xcopy %userprofile%\AppData\LocalLow\Nolla_Games_Noita\backup\*.* %userprofile%\AppData\LocalLow\Nolla_Games_Noita\save00\*.* /e /y /i
 cls
 echo Backup Restored.
+if /I "%FASTMODE%"=="true" ( goto startapp )
 goto selection
 
 :startapp
