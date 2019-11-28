@@ -5,10 +5,10 @@ Rem Created by https://github.com/Killer-Kat, inspired by this reddit post https
 title Noita Save Script
 color 0D
 Echo Noitia Saving Script, Created by Killer-Kat.
-Echo Options: 1. Save 2. Restore 3. Exit
 
 Rem this part gets the user input to select the task.
 :selection
+Echo Options: 1. Save 2. Restore 3. Exit
 set /p input="Select option: "
 
 if "%input%"=="1" ( goto ONE)
