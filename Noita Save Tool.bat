@@ -14,6 +14,7 @@ set /p input="Select option: "
 if "%input%"=="1" ( goto ONE)
 if "%input%"=="2" ( goto TWO)
 if "%input%"=="3" ( exit)
+if "%input%"=="4" ( goto startapp)
 if /I "%input%"=="secret" ( goto Secret ) else (
 echo Error invalid selection.
 goto selection )
@@ -31,6 +32,12 @@ mkdir %userprofile%\AppData\LocalLow\Nolla_Games_Noita\save00
 xcopy %userprofile%\AppData\LocalLow\Nolla_Games_Noita\backup\*.* %userprofile%\AppData\LocalLow\Nolla_Games_Noita\save00\*.* /e /y /i
 cls
 echo Backup Restored.
+goto selection
+
+:startapp
+Echo Starting Noita
+start steam://rungameid/881100
+cls
 goto selection
 
 :Secret
