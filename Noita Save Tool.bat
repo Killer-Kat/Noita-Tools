@@ -4,6 +4,7 @@ Rem Created by https://github.com/Killer-Kat, inspired by this reddit post https
 rem FASTMODE toggles auto launch after a restore.
 set FASTMODE=false
 set SAVE=1
+set Counter=1
 title Noita Save Script
 color 0D
 Echo Noitia Saving Script, Created by Killer-Kat.
@@ -22,6 +23,8 @@ if "%input%"=="4" ( goto startapp)
 if "%input%"=="5" ( exit)
 if /I "%input%"=="secret" ( goto Secret ) else (
 echo Error invalid selection.
+SET /a Counter = %Counter% + 1
+if "%Counter%"=="6" ( goto Secret )
 goto selection )
 
 :ONE
@@ -45,7 +48,7 @@ Echo Starting Noita
 start steam://rungameid/881100
 cls
 goto selection
-
+Rem This allows the user to change save files by setting the SAVE variable
 :SaveSelect
 Echo Please Select Save Slot 1,2,3
 set /p SAVE="Set Save File "
@@ -61,7 +64,7 @@ goto selection
 :Secret
 cls
 Rem this for loop changes the color of the text while keeping the background the same for a rainbow effect.
-for /l %%x in (1, 1, 25) do (
+for /l %%x in (1, 1, 15) do (
  ECHO YOU HAVE ANGERED THE GODS
  color 0C
  timeout /t 1 /nobreak >nul
