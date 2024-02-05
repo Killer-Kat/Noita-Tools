@@ -1,4 +1,4 @@
-@ECHO off
+@ECHO off 
 Rem Noita Save/Backup script
 Rem Created by https://github.com/Killer-Kat, inspired by this reddit post https://www.reddit.com/r/noita/comments/da5pwb/scripts_to_backuprestore_your_saves/
 rem FASTMODE toggles auto launch after a restore.
@@ -7,12 +7,23 @@ set SAVE=1
 set Counter=1
 title Noita Save Script
 color 0D
+
+Echo.
 Echo Noitia Saving Script, Created by Killer-Kat.
 
 Rem this part gets the user input to select the task.
 :selection
-Echo Options: 1. Save 2. Restore 3. Select Save File 4. Launch Game 5. Exit
-Echo Current Save Slot is %SAVE%
+Echo.
+Echo Options: 
+Echo 1. Save 
+Echo 2. Restore 
+Echo 3. Select Save File 
+Echo 4. Launch Game 
+Echo 5. Exit
+
+CALL :LIST
+Echo.
+
 if /I "%FASTMODE%"=="true" ( echo Auto Launch enabled )
 set /p input="Select option: "
 
@@ -20,12 +31,44 @@ if "%input%"=="1" ( goto ONE)
 if "%input%"=="2" ( goto TWO)
 if "%input%"=="3" ( goto SaveSelect)
 if "%input%"=="4" ( goto startapp)
-if "%input%"=="5" ( exit)
+if "%input%"=="5" ( exit /b)
 if /I "%input%"=="secret" ( goto Secret ) else (
 echo Error invalid selection.
 SET /a Counter = %Counter% + 1
 if "%Counter%"=="6" ( goto Secret )
 goto selection )
+
+:LIST
+
+Echo.
+CALL :PRINT_SAVE_FILE 1
+CALL :PRINT_SAVE_FILE 2
+CALL :PRINT_SAVE_FILE 3
+
+exit /b
+goto selection
+
+:PRINT_SAVE_FILE
+SETLOCAL
+set "path_of_folder=%userprofile%\AppData\LocalLow\Nolla_Games_Noita\backup%1"
+
+if %SAVE%==%1 (
+set _SLOT=* %1
+) else (
+set _SLOT=  %1
+)
+
+if exist "%path_of_folder%" (  
+  for /f "skip=5 tokens=1,2,4 delims= " %%a in (
+   'dir /ad /tc "%path_of_folder%\."') do IF "%%c"=="." (
+    set "dt=%%a"
+	echo %_SLOT% %%a, %%b
+  )
+) else ( 
+  echo %_SLOT% -
+)
+ENDLOCAL
+exit /b
 
 :ONE
 rmdir %userprofile%\AppData\LocalLow\Nolla_Games_Noita\backup%SAVE% /s /q
